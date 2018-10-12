@@ -1,33 +1,40 @@
 import urllib.request as urllib2
-import csv
-from datetime import datetime
+
+import re
+# import csv
+# from datetime import datetime
 from bs4 import BeautifulSoup
+from mechanize import Browser
 
 
-#quote_page = 'http://www.bloomberg.com/quote/SPX:IND'
-quote_page = 'http://rechart1.acgov.org/docdetail.asp?id=jAxNQ%3D%3DjV%03%13M%215b1%21k%217DAwMR%21%21tzI2O&ms=0&cabinet=opr&pg=&id2=TIvNwr%21E%21%03%0FMHqmbIqRYDE3%215FUBi8yM'
-page = urllib2.urlopen(quote_page)
-soup = BeautifulSoup(page, "html.parser") # Contains html
-
-soup.get()
-td_tags = soup.find_all('td')
-td_tags = list(td_tags)
-
-#Loop through
-tag = td_tags[39]
-tag.get_text('href')
-tag.get()
+def submit_form(brw, input_name, value):
+    brw[input_name] = value
+    return brw.submit(name="btnLogin")
 
 
+def get_page_info(site):
+    url = site.get("url")
+    br = Browser()
+    br.set_handle_robots(False)
+    br.open(url)
 
-print(td_tags)
+    if site.get("login"):
+        #  Todo Make a generic login function based on site
+        br.select_form(id="LOGIN")
+        submit_form(br, "USERID", site.get("user_id"))
 
-#print(soup.prettify())
+    return br
 
 
-# name = soup.find("h1", attrs={"class": "name"}).text
-# price = soup.find("div", attrs={"class": "price"}).text
-#
-# data = []
-# data.append((name,price))
+def main():
+    url =
+    browser = get_page_info(site)
+    browser.select_form(id="quickSearchFormN")
+    browser["searchTerm"] = "Craig Building Systems"
+    response = browser.submit()
+
+if __name__ == '__main__':
+   main()
+
+
 
