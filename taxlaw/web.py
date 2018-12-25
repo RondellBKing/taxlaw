@@ -22,7 +22,7 @@ def write_results():
     pass
 
 
-def get_input_date(msg):
+def validate_date(msg):
     while True:
         date = input(msg)
         if date == 'end':
@@ -41,10 +41,7 @@ def get_input_county(msg):
         county = input(msg)
         if county.lower() == 'end':
             sys.exit('Closing web scaper')
-        try:
-            url = Configuration.loaded_sites[county.lower()]
-        except KeyError:
-            print("County {} not configured, try again (or type end)".format(url))
+
             continue
         else:
             return url
