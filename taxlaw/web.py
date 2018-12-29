@@ -1,4 +1,3 @@
-#! python3
 import pyperclip
 from taxlaw import Configuration
 import webbrowser
@@ -54,22 +53,31 @@ def get_input_county(msg):
 
 def main():
 
-    url = get_input_county('Enter the county name: ')
-    date = get_input_date('Enter the starting date: ')
+    # url = get_input_county('Enter the county name: ')
+    # date = get_input_date('Enter the starting date: ')
     #webbrowser.open(url)  # If you need to open pages
 
+    url = "http://www.criis.com/cgi-bin/doc_search.cgi?COUNTY=fresno&YEARSEGMENT=current&TAB=3#"
+    base_url = "http://www.criis.com"
     res = requests.get(url)
     res.raise_for_status()
 
     soup = BeautifulSoup(res.content, "html.parser")
     action_url = soup.find('form').get('action')
-    data = {"DOC_TYPE": "TAX LIENS (FED)",
-            "doc_date_A": "08/01/18",
-            "doc_date_B": "11/01/18"
+    data = {"DOC_TYPE": "026",
+            "doc_date_A": "08012018",
+            "doc_date_B": "11012018",
+            "SEARCH_TYPE": "DOCTYPE",
+            "YEARSEGMENT": "current",
+            "ORDER_TYPE": "Recorded Official",
+            "LAST_RECORD": "1",
+            "SCREENRETURN": "doc_search.cgi",
+            "SCREEN_RETURN_NAME": "Recorded Document Search",
             }
-
-    url += url + action_url
-    requests.post(url, data=data)
-    #print(soup)
+    form_url = "{}{}".format(base_url, action_url)
+    print("Form url is {}".format(form_url))
+    post = requests.post(form_url, data=data)
+    #webbrowser.open(post.url)
+    print(BeautifulSoup(post.content))
 if __name__ == '__main__':
     main()
