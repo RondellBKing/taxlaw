@@ -1,12 +1,17 @@
 import pyperclip
 from taxlaw import Configuration
 import webbrowser
+import xlsxwriter
 import sys
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import datetime
 from dateutil import parser
+import logging
+
+logger = logging.getLogger('WebScraper')
+logger.setLevel(logging.INFO)
 
 
 def getsite():
@@ -55,16 +60,15 @@ def main():
 
     # url = get_input_county('Enter the county name: ')
     # date = get_input_date('Enter the starting date: ')
-    #webbrowser.open(url)  # If you need to open pages
 
     url = "http://www.criis.com/cgi-bin/doc_search.cgi?COUNTY=fresno&YEARSEGMENT=current&TAB=3#"
     base_url = "http://www.criis.com"
     res = requests.get(url)
     res.raise_for_status()
 
-    soup = BeautifulSoup(res.content, "html.parser")
-    action_url = soup.find('form').get('action')
-    data = {"DOC_TYPE": "026",
+    main_soup = BeautifulSoup(res.content, "html.parser")
+    action_url = main_soup.find('form').get('action')
+    data = {"DOC_TYPE": "026", # Federal Tax Lien
             "doc_date_A": "08012018",
             "doc_date_B": "11012018",
             "SEARCH_TYPE": "DOCTYPE",
@@ -75,9 +79,28 @@ def main():
             "SCREEN_RETURN_NAME": "Recorded Document Search",
             }
     form_url = "{}{}".format(base_url, action_url)
-    print("Form url is {}".format(form_url))
+    logger.info("Form url is {}".format(form_url))
     post = requests.post(form_url, data=data)
-    #webbrowser.open(post.url)
-    print(BeautifulSoup(post.content))
+    #webbrowser.open(post.url)  # Needed for the cookie I think
+
+    if post.status_code == 200:
+        logger.info('Page Returned successfully!')
+        results_soup = BeautifulSoup(post.content)
+    else:
+        logger.error('Query failed to return results -> response code {}'.format(post.status_code))
+        logger.error('Page query ->:{}'.format(data))
+        return
+
+    rows = results_soup.find_all('tr')
+    #print(results_soup)
+    for data in rows[9:]:
+        if len(data) == 13:
+            cells = data.find_all('td')
+            xlsxwriter.Workbook()
+            logger.warning("Name:{} - Date:{}".format(cells[1].string, cells[5].string))
+
 if __name__ == '__main__':
     main()
+
+
+print('hi')
