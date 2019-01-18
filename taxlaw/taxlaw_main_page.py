@@ -1,7 +1,10 @@
 #! python3
+
+# Crappy GUI, NEEDS WORK!
 from tkinter import Tk, Label, Button, Entry, IntVar, END, W, E, Menu
 from taxlaw import Configuration
 
+# Todo Rondell K. -> Redesign interface, Possibly use Javascript (Research React or Angular)
 class Calculator:
 
     def __init__(self, master):

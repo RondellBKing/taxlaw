@@ -78,10 +78,11 @@ def main():
             "SCREENRETURN": "doc_search.cgi",
             "SCREEN_RETURN_NAME": "Recorded Document Search",
             }
+
     form_url = "{}{}".format(base_url, action_url)
     logger.info("Form url is {}".format(form_url))
-    post = requests.post(form_url, data=data)
-    #webbrowser.open(post.url)  # Needed for the cookie I think
+    post = requests.post(form_url, data=data)  # Response page
+    #webbrowser.open(post.url)  # Needed for the cookies I think
 
     if post.status_code == 200:
         logger.info('Page Returned successfully!')
@@ -93,7 +94,7 @@ def main():
 
     rows = results_soup.find_all('tr')
     #print(results_soup)
-    for data in rows[9:]:
+    for data in rows[9:]: # Header data starts here
         if len(data) == 13:
             cells = data.find_all('td')
             xlsxwriter.Workbook()
@@ -101,6 +102,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-print('hi')

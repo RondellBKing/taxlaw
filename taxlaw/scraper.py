@@ -1,40 +1,21 @@
-import urllib.request as urllib2
-
-import re
-# import csv
-# from datetime import datetime
-from bs4 import BeautifulSoup
-from mechanize import Browser
+# Base Class for the web scrapers. Web scrapers inherit this class.
 
 
-def submit_form(brw, input_name, value):
-    brw[input_name] = value
-    return brw.submit(name="btnLogin")
+class Scraper (object):
 
+    def __init__(self, start_date, end_date):
+        self.start_date = start_date
+        self.end_date = end_date
+        self.results = ""
+        self.error = ""
 
-def get_page_info(site):
-    url = site.get("url")
-    br = Browser()
-    br.set_handle_robots(False)
-    br.open(url)
+    def scrape(self):
+        # DO scraping things!
+        print(self.start_date)
+        print(self.end_date)
+        self.results = 'results'
 
-    if site.get("login"):
-        #  Todo Make a generic login function based on site
-        br.select_form(id="LOGIN")
-        submit_form(br, "USERID", site.get("user_id"))
-
-    return br
-
-
-def main():
-    url =
-    browser = get_page_info(site)
-    browser.select_form(id="quickSearchFormN")
-    browser["searchTerm"] = "Craig Building Systems"
-    response = browser.submit()
-
-if __name__ == '__main__':
-   main()
-
-
-
+    def write_results(self):
+        # Google Sheets for now - > https://developers.google.com/sheets/api/quickstart/python
+        # Todo Mitch implement the solution for google sheets
+        print(self.results)
