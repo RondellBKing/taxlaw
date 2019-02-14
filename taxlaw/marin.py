@@ -23,21 +23,30 @@ class Marin(Scraper):
         soup = BeautifulSoup(res.content, "html.parser")
         table = soup.find(lambda tag: tag.name=='table' and tag.has_attr('id') and tag['id']=="i0")
 
+        url_list = []
         for tr in list(table):
             if '>TAX LIEN<' in str(tr):
                 url = tr.a.get('href')
                 disclaimer = '&XHideDisclaimer=True'
                 page = url + disclaimer
-                res = requests.get(page)
-                res.raise_for_status()
-                soup = BeautifulSoup(res.content, 'html.parser')
-                table = soup.find('table')
-                results = []
-                for row in table.findAll('tr'):
-                    text = row.text.replace('class=\"i19\"', '')
-                    results.append(text)
-                print('\n' + str(results) + '\n')
+                url_list.append(page)
 
-marin = Marin(input('Start Date(dd/mm/yyyy): '), input('End Date(dd/mm/yyyy): '))
-marin.make_url()
-marin.html_parse()
+        result_list = []
+        for link in url_list:
+            link_result = []
+            res = requests.get(link)
+            res.raise_for_status()
+            soup = BeautifulSoup(res.content, 'html.parser')
+            table = soup.find('table')
+            for row in table.findAll('tr'):
+                text = row.text.replace('class=\"i19\"', '')
+                link_result.append(text)
+            result_list.append(link_result)
+
+        for result in result_list:
+            print('\n' + str(result) + '\n')
+
+if __name__ == '__main__':
+    marin = Marin(input('Start Date(dd/mm/yyyy): '), input('End Date(dd/mm/yyyy): '))
+    marin.make_url()
+    marin.html_parse()
