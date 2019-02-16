@@ -31,7 +31,7 @@ class Marin(Scraper):
                 page = url + disclaimer
                 url_list.append(page)
 
-        result_list = []
+        self.result_list = []
         for link in url_list:
             link_result = []
             res = requests.get(link)
@@ -41,10 +41,10 @@ class Marin(Scraper):
             for row in table.findAll('tr'):
                 text = row.text.replace('class=\"i19\"', '')
                 link_result.append(text)
-            result_list.append(link_result)
+            self.result_list.append(link_result)
 
-        for result in result_list:
-            print('\n' + str(result) + '\n')
+    def write(self):
+        
 
 if __name__ == '__main__':
     marin = Marin(input('Start Date(dd/mm/yyyy): '), input('End Date(dd/mm/yyyy): '))
