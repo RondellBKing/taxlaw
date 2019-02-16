@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from scraper import Scraper
 from lxml import html
 import webbrowser
+import pygsheets
 
 
 class Marin(Scraper):
@@ -44,7 +45,11 @@ class Marin(Scraper):
             self.result_list.append(link_result)
 
     def write(self):
-        
+            gc = pygsheets.authorize(client_secret='/Users/mitchellhall/programming/pyprojects/taxlaw/taxlaw/credentials.json')
+            sh = gc.open('Lien Lead Generation')
+            wks = sh.worksheet_by_title('Sheet1')
+            wks.update_values(crange='A1', values=self.result_list)
+
 
 if __name__ == '__main__':
     marin = Marin(input('Start Date(dd/mm/yyyy): '), input('End Date(dd/mm/yyyy): '))
