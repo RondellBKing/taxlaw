@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from scraper import Scraper
 from lxml import html
-import pygsheets
 
 
 class Marin(Scraper):
@@ -35,7 +34,7 @@ class Marin(Scraper):
                 self.url_list.append(page)
 
     def result_list(self):
-        self.result_list = []
+        self.results = []
         for link in self.url_list:
             link_result = []
             res = requests.get(link)
@@ -45,15 +44,7 @@ class Marin(Scraper):
             for row in table.findAll('tr'):
                 text = row.text.replace('class=\"i19\"', '')
                 link_result.append(text)
-            self.result_list.append(link_result)
-
-    def write(self):
-            gc = pygsheets.authorize(client_secret='/Users/mitchellhall/programming/pyprojects/taxlaw/taxlaw/credentials.json')
-            sh = gc.open('Lien Lead Generation')
-            wks = sh.worksheet_by_title('Sheet1')
-            wks.clear()
-            wks.update_values(crange='A1', values=self.result_list)
-            # clear previous
+            self.results.append(link_result)
 
 
 if __name__ == '__main__':
@@ -62,4 +53,4 @@ if __name__ == '__main__':
     marin.get_table()
     marin.url_list()
     marin.result_list()
-    marin.write()
+    marin.write_results()
