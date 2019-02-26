@@ -1,6 +1,7 @@
 # Base Class for the web scrapers. Web scrapers inherit this class.
 import pygsheets
 
+
 class Scraper (object):
 
     def __init__(self, start_date, end_date):
@@ -17,7 +18,6 @@ class Scraper (object):
 
     def write_results(self):
         # Google Sheets for now - > https://developers.google.com/sheets/api/quickstart/python
-        # Todo Mitch implement the solution for google sheets
         gc = pygsheets.authorize(client_secret='/Users/mitchellhall/programming/pyprojects/taxlaw/taxlaw/credentials.json')
         sh = gc.open('Lien Lead Generation')
         wks = sh.worksheet_by_title('Sheet1')

@@ -47,10 +47,16 @@ class Marin(Scraper):
             self.results.append(link_result)
 
 
+# Todo Rondell added this let me know your thoughts. Need one point of execution
+    def scrape(self):
+        self.make_url()
+        self.get_table()
+        self.url_list()
+        self.result_list()
+        self.write_results()
+
+
 if __name__ == '__main__':
     marin = Marin(input('Start Date(dd/mm/yyyy): '), input('End Date(dd/mm/yyyy): '))
-    marin.make_url()
-    marin.get_table()
-    marin.url_list()
-    marin.result_list()
-    marin.write_results()
+    marin.scrape()
+
