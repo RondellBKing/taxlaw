@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from scraper import Scraper
+from taxlaw.scraper import Scraper
 from lxml import html
 
 
@@ -9,12 +9,12 @@ class Marin(Scraper):
     # include error for (wrong input, no results, )
 
     def make_url(self):
-        smonth = self.start_date[0:2]
-        sday = self.start_date[3:5]
-        syear = self.start_date[6:]
-        emonth = self.end_date[0:2]
-        eday = self.end_date[3:5]
-        eyear = self.end_date[6:]
+        smonth = self.start_date.month
+        sday = self.start_date.day
+        syear = self.start_date.year
+        emonth = self.end_date.month
+        eday = self.end_date.day
+        eyear = self.end_date.year
         self.result_url = 'https://apps.marincounty.org/RecordersIndexSearch/?Action=N&GCO=1&GCPR=100&NDT=&NED={}%2F{}%2F{}&NFN=&NLN=EMPLOYMENT%20DEVELOPMENT%20DEPARTMENT&NMI=&NSD={}%2F{}%2F{}&XHideDisclaimer=True'.format(emonth, eday, eyear, smonth, sday, syear)
         print('\n' + 'Url being parsed: ' + self.result_url + '\n')
 
@@ -53,7 +53,7 @@ class Marin(Scraper):
         self.get_table()
         self.url_list()
         self.result_list()
-        self.write_results()
+        #self.write_results()
 
 
 if __name__ == '__main__':

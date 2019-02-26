@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
-from taxlaw import marin  # Need a generic method to call differenct scrapers
+from datetime import datetime
+from taxlaw import marin  # Need a generic method to call different scrapers
 app = Flask(__name__)
 
 
@@ -13,10 +14,13 @@ def result():
     if request.method == 'POST':
         results = request.form  # Input data from webpage
 
-        scraper = marin.Marin(results.get('startDate'), results.get('endDate'))
+        start_date = datetime.strptime(results.get('startDate'), '%Y-%m-%d')
+        end_date = datetime.strptime(results.get('endDate'), '%Y-%m-%d')
+
+        scraper = marin.Marin(start_date, end_date)
         scraper.scrape()
 
-        return render_template('result.html', result=scraper.result_list)
+        return render_template('result.html', result=scraper.results)
 
 if __name__ == '__main__':
     app.run(debug=True)
