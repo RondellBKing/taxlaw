@@ -1,0 +1,9 @@
+{% extends "index.html" %}
+
+{% block results %}
+    {% for list_value in result %}
+        {% for value in list_value %}
+            <p>{{ value }}</p>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
