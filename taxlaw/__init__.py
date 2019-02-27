@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from datetime import datetime
-from taxlaw import marin  # Need a generic method to call different scrapers
+import importlib
+from taxlaw import marin
 app = Flask(__name__)
 
 
@@ -29,7 +30,12 @@ def result():
         start_date = datetime_format(results.get('startDate'))
         end_date = datetime_format(results.get('endDate'))
 
-        scraper = marin.Marin(start_date, end_date)
+        # Determine the region to scrape based on the user input
+        region = results.get('regionName')
+        region_module = importlib.import_module(region, package="taxlaw")
+        region_cl = getattr(region_module, region.capitalize())
+        scraper = region_cl(start_date, end_date)
+
         scraper.scrape()
 
         return render_template('result.html', result=scraper.results)

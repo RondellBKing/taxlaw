@@ -23,3 +23,6 @@ class Scraper (object):
         wks.clear()
         wks.update_values(crange='A1', values=self.results)
         print(self.results)
+
+    def make_url(self):
+        pass
