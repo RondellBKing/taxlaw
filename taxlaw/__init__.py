@@ -4,8 +4,17 @@ from taxlaw import marin  # Need a generic method to call different scrapers
 app = Flask(__name__)
 
 
+def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
+    return value.strftime(format)
+
+#environment.filters['datetimeformat'] = datetimeformat
+
+# written on: {{ article.pub_date|datetimeformat }}
+# publication date: {{ article.pub_date|datetimeformat('%d-%m-%Y') }}
+
 @app.route("/")
 def index():
+
     return render_template('index.html')
 
 
