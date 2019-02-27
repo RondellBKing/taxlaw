@@ -4,14 +4,16 @@ from taxlaw import marin  # Need a generic method to call different scrapers
 app = Flask(__name__)
 
 
-def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
-    return value.strftime(format)
+def datetime_format(value, dt_format='%Y-%m-%d'):
+    return datetime.strptime(value, dt_format)
 
 #environment.filters['datetimeformat'] = datetimeformat
 
 # written on: {{ article.pub_date|datetimeformat }}
 # publication date: {{ article.pub_date|datetimeformat('%d-%m-%Y') }}
 
+
+# Landing Page
 @app.route("/")
 def index():
 
@@ -21,10 +23,11 @@ def index():
 @app.route('/result', methods=['POST', 'GET'])
 def result():
     if request.method == 'POST':
-        results = request.form  # Input data from webpage
+        results = request.form
 
-        start_date = datetime.strptime(results.get('startDate'), '%Y-%m-%d')
-        end_date = datetime.strptime(results.get('endDate'), '%Y-%m-%d')
+        # Store dates in datetime object for universal use, parsing done as needed.
+        start_date = datetime_format(results.get('startDate'))
+        end_date = datetime_format(results.get('endDate'))
 
         scraper = marin.Marin(start_date, end_date)
         scraper.scrape()

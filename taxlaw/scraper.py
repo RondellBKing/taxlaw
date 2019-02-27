@@ -7,11 +7,10 @@ class Scraper (object):
     def __init__(self, start_date, end_date):
         self.start_date = start_date
         self.end_date = end_date
-        self.results = ""
+        self.results = []
         self.error = ""
 
     def scrape(self):
-        # DO scraping things!
         print(self.start_date)
         print(self.end_date)
         self.results = 'results'
