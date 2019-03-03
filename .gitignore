@@ -104,6 +104,3 @@ ENV/
 .idea*
 
 credentials.json
-lien_lead_generation-4bb5231c6c79.json
-token.pickle
-sheets.googleapis.com-python.json
