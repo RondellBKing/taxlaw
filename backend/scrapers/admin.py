@@ -1,11 +1,9 @@
 from django.contrib import admin
-from .models import County, DocType, DateRange
+from .models import County
 
-class ScraperAdmin(admin.ModelAdmin):
-    list_display = ('county')
+class CountyAdmin(admin.ModelAdmin):
+    list_display = ('county', 'doc_type')
 
 # Register your models here.
 
-admin.site.register(County)
-admin.site.register(DocType)
-admin.site.register(DateRange)
+admin.site.register(County, CountyAdmin)
