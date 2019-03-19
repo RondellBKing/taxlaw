@@ -20,6 +20,8 @@ from scrapers import views
 
 routers = routers.DefaultRouter()
 routers.register(r'county', views.CountyView, 'county')
+routers.register(r'doc_type', views.DocView, 'doc_type')
+routers.register(r'dates', views.DateView, 'dates')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
