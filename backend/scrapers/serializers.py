@@ -1,18 +1,17 @@
 from rest_framework import serializers
-from .models import County, DocType, DateRange
+from .models import County, Lien
 
 class CountySerializer(serializers.ModelSerializer):
     class Meta:
         model = County
         fields = ('id', 'county')
 
-class DocSerializer(serializers.ModelSerializer):
+class LienSerializer(serializers.ModelSerializer):
     class Meta:
-        model = DocType
-        fields = ('id', 'doc_type')
+        model = Lien
+        fields = ('id', 'lien')
 
-class DateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DateRange
-        fields = ('id', 'start_date', 'end_date')
-        
+# class DateSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = DateRange
+#         fields = ('id', 'start_date', 'end_date')

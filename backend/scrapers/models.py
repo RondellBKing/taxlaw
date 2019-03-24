@@ -1,23 +1,25 @@
 from django.db import models
+from dynamic_scraper.models import Scraper, SchedulerRuntime
+from scrapy_djangoitem import DjangoItem
 
 # Create your models here.
 
 class County(models.Model):
-    county = models.CharField(max_length=120)
+    name = models.CharField(max_length=120)
+    models = models.URLField()
+    scraper = models.ForeignKey(Scraper, blank=True, null=True, on_delete=models.SET_NULL)
+    scraper_runtime = models.ForeignKey(SchedulerRuntime, blank=True, null=True, on_delete=models.SET_NULL)
 
-    def _str_(self):
-        return self.county
+    def __unicode__(self):
+        return self.name
 
-class DocType(models.Model):
-    doc_type = models.CharField(max_length=120)
+class Lien(models.Model):
+    doc_type = models.CharField(max_length=200)
+    county = models.ForeignKey(County)
+    url = models.URLField()
 
-    def _str_(self):
-        return self.doc_type
+    def __unicode__(self):
+        return self.name
 
-class DateRange(models.Model):
-    start_date = models.DateField()
-    end_date = models.DateField()
-
-    def _str_(self):
-        return self.start_date
-        return self.end_date
+class LienItem(DjangoItem):
+    django_model = Lien
