@@ -11,7 +11,7 @@ class CountyView(viewsets.ModelViewSet):
 
 class LienView(viewsets.ModelViewSet):
     serializer_class = LienSerializer
-    queryset = DocType.objects.all()
+    queryset = Lien.objects.all()
 
 # class DateView(viewsets.ModelViewSet):
 #     serializer_class = DateSerializer

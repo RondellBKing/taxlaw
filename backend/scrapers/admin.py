@@ -8,4 +8,4 @@ class CountyAdmin(admin.ModelAdmin):
 
 admin.site.register(County)
 admin.site.register(Lien)
-admin.site.register(LienItem)
+# admin.site.register(LienItem)

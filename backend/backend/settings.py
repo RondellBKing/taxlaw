@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'scrapers',
     'corsheaders',
     'rest_framework',
+    'scraper',
 ]
 
 MIDDLEWARE = [
