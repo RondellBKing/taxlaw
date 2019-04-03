@@ -7,6 +7,8 @@
 
 
 class MarinPipeline(object):
+
     def process_item(self, item, spider):
+        print('HELLO')
         item.save()
         return item

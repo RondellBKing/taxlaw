@@ -10,4 +10,4 @@ from scrapers.models import Lien
 
 class LienItem(DjangoItem):
     django_model = Lien
-    pass
+
