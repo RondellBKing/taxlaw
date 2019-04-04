@@ -5,6 +5,16 @@ import axios from 'axios';
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 
+// Google map listing
+// Linkedin used to verify business names
+// BBB
+
+// Corporation wiki
+//cslb.gov
+//porch.com
+//quick transport solutions.com
+
+
 // Bloomberg Api
 const API = 'https://newsapi.org/v2/top-headlines?' +
           'country=us&' +
