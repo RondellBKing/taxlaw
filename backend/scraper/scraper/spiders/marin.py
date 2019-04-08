@@ -4,18 +4,21 @@ import urllib.parse
 
 class MarinSpider(scrapy.Spider):
     name = 'marin'
+    allowed_domains = ['marincounty.org']
 
     def start_requests(self):
-       base_url = 'https://apps.marincounty.org/RecordersIndexSearch/%s'
+       base_url = 'https://apps.marincounty.org/RecordersIndexSearch/'
                
        query = urllib.parse.urlencode({
-               'TDT': 'AFFIDAVIT',
-               'TSD': '04/01/2019',
+               'Action': 'T', 
+               'TDT': 'LIEN',
                'TED': '04/03/2019',
-               'Action': 'T',
+               'TSD': '03/01/2019',
+               'TED': '04/03/2019',
+               'XHideDisclaimer': 'True',
                })
 
-       action_url = base_url % query
+       action_url = base_url + '?' + query
        
        urls = [
                action_url,
