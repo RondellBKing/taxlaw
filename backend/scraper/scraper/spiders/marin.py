@@ -35,3 +35,8 @@ class MarinSpider(scrapy.Spider):
         item['url'] = response.url
 
         return item
+
+    table = response.css('table.i27')
+    rows = table.css('tr')
+    elements = rows.css('td')
+    urls = elements.css('a')
