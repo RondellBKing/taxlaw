@@ -11,10 +11,10 @@ class MarinSpider(scrapy.Spider):
                
        query = urllib.parse.urlencode({
                'Action': 'T', 
+               'GCPR': '100',
                'TDT': 'LIEN',
                'TED': '04/03/2019',
-               'TSD': '03/01/2019',
-               'TED': '04/03/2019',
+               'TSD': '01/01/2019',
                'XHideDisclaimer': 'True',
                })
 
@@ -28,15 +28,26 @@ class MarinSpider(scrapy.Spider):
            yield scrapy.Request(url=action_url, callback=self.parse)
 
     def parse(self, response):
+        links = response.css('table.i27 tr td a::attr(href)').getall()
+        for link in links:
+            yield scrapy.Request(link, callback=self.parse_attr)
+
+    def parse_attr(self, response):
         self.log('stuff happened')
         item = LienItem()
-        item['headers'] = response.headers
-        item['body'] = response.body
-        item['url'] = response.url
+        table = response.css('table.i18')
+        item['recording_date'] = table.css('tr td.i21::text')[0].get()
+        item['doc_title'] = table.css('tr td.i21::text')[1].get()
+        item['involved'] = table.css('tr td.i21::text')[2:].getall()
 
-        return item
+            #results = table.css('tr td.i21::text').getall()
+#        yield{
+#                item['recording_date'] = table.css('tr td.i21::text')[0].get()
+#                item['doc_title'] = table.css('tr td.i21::text')[1].get()
+#                item['involved'] = table.css('tr td.i21::text')[2:].getall()
+#                }
+#
+        yield item
 
-    table = response.css('table.i27')
-    rows = table.css('tr')
-    elements = rows.css('td')
-    urls = elements.css('a')
+#links = response.css('table.i27 tr td a::attr(href)').getall()
+#disclaimer = '&XHideDisclaimer=True'
