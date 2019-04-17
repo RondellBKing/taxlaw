@@ -9,7 +9,7 @@ class CountySerializer(serializers.ModelSerializer):
 class LienSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lien
-        fields = ('id', 'lien')
+        fields = ('id', 'recording_date', 'doc_title', 'involved')
 
 # class DateSerializer(serializers.ModelSerializer):
 #     class Meta:

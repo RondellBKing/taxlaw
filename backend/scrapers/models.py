@@ -16,13 +16,13 @@ class Lien(models.Model):
 #    doc_type = models.CharField(max_length=200)
 #    county = models.ForeignKey(County, on_delete=models.CASCADE,)
 #    url = models.URLField()
-    recording_date = models.TextField()
+    recording_date = models.CharField(max_length=120)
     doc_title = models.TextField()
     involved = models.TextField()
 
     def __unicode__(self):
-        return self.name
+        return self.recording_date
 
 
-class LienItem(DjangoItem):
-    django_model = Lien
+#class LienItem(DjangoItem):
+#    django_model = Lien

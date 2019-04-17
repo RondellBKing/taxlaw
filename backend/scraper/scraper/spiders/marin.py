@@ -40,14 +40,5 @@ class MarinSpider(scrapy.Spider):
         item['doc_title'] = table.css('tr td.i21::text')[1].get()
         item['involved'] = table.css('tr td.i21::text')[2:].getall()
 
-            #results = table.css('tr td.i21::text').getall()
-#        yield{
-#                item['recording_date'] = table.css('tr td.i21::text')[0].get()
-#                item['doc_title'] = table.css('tr td.i21::text')[1].get()
-#                item['involved'] = table.css('tr td.i21::text')[2:].getall()
-#                }
-#
         yield item
 
-#links = response.css('table.i27 tr td a::attr(href)').getall()
-#disclaimer = '&XHideDisclaimer=True'
