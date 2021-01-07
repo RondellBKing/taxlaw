@@ -13,7 +13,7 @@ setup(
    install_requires=[
    'beautifulsoup4 == 4.7.1',
    'flask == 1.0.2',
-   'lxml == 4.3.1',
+   'lxml == 4.6.2',
    'pygsheets == 2.0.0'
    ],
    python_requires='>=3.6.6'
